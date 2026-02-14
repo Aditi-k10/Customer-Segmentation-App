@@ -2,43 +2,80 @@ import streamlit as st
 import numpy as np
 import joblib
 
-# Load Model and Scaler
+# -----------------------------
+# Page Configuration
+# -----------------------------
+st.set_page_config(
+    page_title="Customer Segmentation App",
+    page_icon="📊",
+    layout="wide"
+)
+
+# -----------------------------
+# Load Model
+# -----------------------------
 model = joblib.load("customer_segmentation_model.pkl")
 scaler = joblib.load("scaler.pkl")
 
-st.title("Customer Segmentation Prediction App")
+# -----------------------------
+# Title Section
+# -----------------------------
+st.title("📊 Customer Segmentation Prediction")
+st.markdown("### Identify Customer Type Using Behaviour & Spending Patterns")
 
-st.write("Enter Customer Details")
+st.write("---")
 
-# User Inputs
-income = st.number_input("Income")
-recency = st.number_input("Recency")
-age = st.number_input("Age")
-spending = st.number_input("Total Spending")
-family_size = st.number_input("Family Size")
-web_purchase = st.number_input("Number of Web Purchases")
-catalog_purchase = st.number_input("Number of Catalog Purchases")
-store_purchase = st.number_input("Number of Store Purchases")
-web_visits = st.number_input("Web Visits Per Month")
+# -----------------------------
+# Sidebar Input Section
+# -----------------------------
+st.sidebar.header("Enter Customer Details")
 
-if st.button("Predict Customer Segment"):
+income = st.sidebar.number_input("💰 Income", min_value=0)
+recency = st.sidebar.number_input("🕒 Recency (Days since last purchase)", min_value=0)
+age = st.sidebar.number_input("🎂 Age", min_value=0)
+spending = st.sidebar.number_input("🛒 Total Spending", min_value=0)
+family_size = st.sidebar.number_input("👨‍👩‍👧 Family Size", min_value=1)
+
+web_purchase = st.sidebar.number_input("🌐 Web Purchases", min_value=0)
+catalog_purchase = st.sidebar.number_input("📦 Catalog Purchases", min_value=0)
+store_purchase = st.sidebar.number_input("🏬 Store Purchases", min_value=0)
+web_visits = st.sidebar.number_input("💻 Monthly Web Visits", min_value=0)
+
+# -----------------------------
+# Prediction Button
+# -----------------------------
+if st.sidebar.button("🔍 Predict Customer Segment"):
 
     input_data = np.array([[income, recency, age, spending, family_size,
-                            web_purchase, catalog_purchase, store_purchase, web_visits]])
+                            web_purchase, catalog_purchase,
+                            store_purchase, web_visits]])
 
     scaled_data = scaler.transform(input_data)
+    cluster = model.predict(scaled_data)[0]
 
-    cluster = model.predict(scaled_data)
+    st.subheader("🎯 Prediction Result")
 
-    # Convert cluster number into customer type
-    if cluster[0] == 0:
+    # -----------------------------
+    # Cluster Mapping
+    # -----------------------------
+    if cluster == 0:
         st.success("Low Value Customers")
+        st.info("These customers spend less and are price sensitive.")
 
-    elif cluster[0] == 1:
+    elif cluster == 1:
         st.success("Premium High Spending Customers")
+        st.info("High income and high spending customers. Loyal and valuable.")
 
-    elif cluster[0] == 2:
+    elif cluster == 2:
         st.success("Digital Active Customers")
+        st.info("Customers who prefer online shopping and digital interaction.")
 
     else:
         st.success("Family Oriented Moderate Customers")
+        st.info("Customers with larger families and moderate spending behaviour.")
+
+# -----------------------------
+# Footer
+# -----------------------------
+st.write("---")
+st.markdown("Made with ❤️ using Streamlit")
