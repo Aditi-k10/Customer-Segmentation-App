@@ -62,7 +62,7 @@ section[data-testid="stSidebar"] > div {
 
 /* -------- Details Text -------- */
 .details-text {
-    font-size:20px;
+    font-size:18px;
     line-height:1.8;
     font-weight:500;
 }
@@ -106,7 +106,6 @@ num_web_visits = st.sidebar.number_input("💻 Web Visits Per Month", min_value=
 predict_btn = st.sidebar.button("🚀 Predict Segment")
 
 # -------------------- Customer Profile --------------------
-st.markdown('<div class="custom-box">', unsafe_allow_html=True)
 st.markdown('<div class="section-title">📊 Customer Profile</div>', unsafe_allow_html=True)
 
 st.markdown(f"""
@@ -122,7 +121,6 @@ st.markdown(f"""
 st.markdown('</div>', unsafe_allow_html=True)
 
 # -------------------- Purchase Behaviour --------------------
-st.markdown('<div class="custom-box">', unsafe_allow_html=True)
 st.markdown('<div class="section-title">📈 Purchase Behaviour</div>', unsafe_allow_html=True)
 
 st.markdown(f"""
@@ -167,3 +165,4 @@ if predict_btn:
 
 # -------------------- Footer --------------------
 st.markdown("---")
+
