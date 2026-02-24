@@ -6,81 +6,97 @@ import joblib
 st.markdown("""
 <style>
 
-/* App background */
+/* ===== App Background ===== */
 .stApp {
-    background: linear-gradient(135deg, #eef2f7, #d9e4f5);
+    background-color: #f2f5f9;
 }
 
-/* Remove extra top white spacing */
-.block-container {
-    padding-top: 0rem !important;
-    margin-top: 0rem !important;
-}
-
-/* Remove empty white bar */
+/* Remove top white bar completely */
 header[data-testid="stHeader"] {
-    background: transparent;
+    display: none;
 }
 
-div[data-testid="stToolbar"] {
-    visibility: hidden;
-    height: 0%;
-    position: fixed;
+.block-container {
+    padding-top: 1rem !important;
 }
 
-/* Main Title */
+/* ===== Main Title ===== */
 .app-title {
-    font-size:65px;
+    font-size:70px;
     font-weight:900;
     text-align:center;
-    color:#0B3C5D;
-    margin-top:10px;
-    margin-bottom:5px;
+    color:#1E3A5F;   /* Same color as sidebar */
+    margin-top:20px;
+    margin-bottom:10px;
 }
 
-/* Subtitle */
+/* ===== Subtitle ===== */
 .app-subtitle {
     text-align:center;
-    font-size:20px;
-    color:#34495E;
-    margin-bottom:40px;
+    font-size:22px;
+    font-weight:500;
+    color:#1E3A5F;
+    margin-bottom:50px;
 }
 
-/* Sidebar styling */
+/* ===== Sidebar Styling ===== */
 section[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #0B3C5D, #1D6FA3);
-    width: 420px !important;   /* Increased width */
+    background: #1E3A5F;  /* Professional deep blue */
+    width: 430px !important;
     padding: 30px;
 }
 
-/* Sidebar text color */
 section[data-testid="stSidebar"] label {
     color: white !important;
-    font-weight: 600;
+    font-size:16px !important;
+    font-weight:600;
 }
 
 section[data-testid="stSidebar"] .stNumberInput input {
-    background-color: #f0f4f8;
+    background-color: #ffffff;
+    border-radius: 8px;
 }
 
-/* Card style */
+/* Sidebar button */
+section[data-testid="stSidebar"] button {
+    background-color: #ffffff !important;
+    color: #1E3A5F !important;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+/* ===== Cards ===== */
 .card {
     background: white;
-    padding: 30px;
+    padding: 40px;
     border-radius: 20px;
-    box-shadow: 0px 10px 25px rgba(0,0,0,0.08);
-    margin-bottom: 30px;
+    box-shadow: 0px 12px 30px rgba(0,0,0,0.08);
+    margin-bottom: 40px;
 }
 
-/* Result box */
+/* Section Headings */
+h3 {
+    font-size:32px !important;
+    font-weight:700 !important;
+    color:#1E3A5F !important;
+}
+
+/* Content text inside cards */
+.card p, .card div {
+    font-size:20px !important;
+    line-height:1.8;
+    font-weight:500;
+}
+
+/* ===== Result Box ===== */
 .result-box {
-    padding: 35px;
+    padding: 40px;
     border-radius: 20px;
     background: #ffffff;
     text-align:center;
-    font-size:26px;
+    font-size:30px;
     font-weight:700;
-    border: 3px solid #0B3C5D;
+    border: 3px solid #1E3A5F;
     margin-top:20px;
 }
 
@@ -165,4 +181,5 @@ if predict_btn:
 
 # -------------------- Footer --------------------
 st.markdown("---")
+
 
