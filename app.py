@@ -4,7 +4,7 @@ import joblib
 
 # -------------------- Page Config --------------------
 st.set_page_config(
-    page_title="Customer Segmentation Dashboard",
+    page_title="Customer Segmentation App",
     page_icon="🛍",
     layout="wide"
 )
@@ -12,27 +12,44 @@ st.set_page_config(
 # -------------------- Custom CSS --------------------
 st.markdown("""
 <style>
+
+.block-container {
+    max-width: 900px;
+    padding-top: 2rem;
+}
+
 .main-title {
-    font-size:42px;
-    font-weight:700;
+    font-size:52px;
+    font-weight:800;
     text-align:center;
-    color:#2E86C1;
+    color:#1F4E79;
+    margin-bottom:10px;
 }
 
 .sub-text {
     text-align:center;
     font-size:18px;
-    color:gray;
+    color:#6c757d;
+    margin-bottom:40px;
+}
+
+.card {
+    padding:25px;
+    border-radius:15px;
+    background-color:#f8f9fa;
+    margin-bottom:25px;
+    box-shadow:0px 4px 12px rgba(0,0,0,0.08);
 }
 
 .result-box {
-    padding:25px;
+    padding:30px;
     border-radius:15px;
-    background-color:#f4f6f7;
+    background-color:#eef5ff;
     text-align:center;
-    font-size:22px;
+    font-size:24px;
     font-weight:600;
-    border:2px solid #2E86C1;
+    border:2px solid #1F4E79;
+    margin-top:20px;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -41,11 +58,9 @@ st.markdown("""
 scaler = joblib.load("scaler.pkl")
 model = joblib.load("customer_segmentation_model.pkl")
 
-# -------------------- Title --------------------
-st.markdown('<p class="main-title">🛍 Customer Segmentation Dashboard</p>', unsafe_allow_html=True)
-st.markdown('<p class="sub-text">Predict Customer Type Using Behaviour & Spending Pattern</p>', unsafe_allow_html=True)
-
-st.write("")
+# -------------------- Title Section --------------------
+st.markdown('<p class="main-title">Customer Segmentation App</p>', unsafe_allow_html=True)
+st.markdown('<p class="sub-text">AI-Powered Customer Profiling & Cluster Prediction</p>', unsafe_allow_html=True)
 
 # -------------------- Sidebar Inputs --------------------
 st.sidebar.header("📋 Enter Customer Details")
@@ -63,29 +78,30 @@ num_web_visits = st.sidebar.number_input("💻 Web Visits Per Month", min_value=
 
 predict_btn = st.sidebar.button("🚀 Predict Segment")
 
-# -------------------- Layout --------------------
-col1, col2 = st.columns(2)
+# -------------------- Customer Profile Card --------------------
+st.markdown('<div class="card">', unsafe_allow_html=True)
+st.subheader("📊 Customer Profile")
 
-with col1:
-    st.subheader("📊 Customer Profile")
+st.write(f"""
+**Income:** {income}  
+**Age:** {age}  
+**Total Spending:** {total_spending}  
+**Recency:** {recency} days  
+**Family Size:** {family_size}
+""")
+st.markdown('</div>', unsafe_allow_html=True)
 
-    st.info(f"""
-    Income : {income}  
-    Age : {age}  
-    Total Spending : {total_spending}  
-    Recency : {recency} days  
-    Family Size : {family_size}
-    """)
+# -------------------- Purchase Behaviour Card --------------------
+st.markdown('<div class="card">', unsafe_allow_html=True)
+st.subheader("📈 Purchase Behaviour")
 
-with col2:
-    st.subheader("📈 Purchase Behaviour")
-
-    st.info(f"""
-    Web Purchases : {num_web_purchases}  
-    Catalog Purchases : {num_catalog_purchases}  
-    Store Purchases : {num_store_purchases}  
-    Web Visits Per Month : {num_web_visits}
-    """)
+st.write(f"""
+**Web Purchases:** {num_web_purchases}  
+**Catalog Purchases:** {num_catalog_purchases}  
+**Store Purchases:** {num_store_purchases}  
+**Web Visits Per Month:** {num_web_visits}
+""")
+st.markdown('</div>', unsafe_allow_html=True)
 
 # -------------------- Prediction --------------------
 if predict_btn:
@@ -98,25 +114,20 @@ if predict_btn:
     scaled_data = scaler.transform(input_data)
     prediction = model.predict(scaled_data)[0]
 
-    st.write("")
     st.subheader("🎯 Prediction Result")
 
-    # -------- Cluster Mapping --------
     if prediction == 0:
-        st.markdown('<div class="result-box">Cluster 0 → 💡 Budget / Low Value Customers</div>', unsafe_allow_html=True)
-
+        result_text = "Cluster 0 → 💡 Budget / Low Value Customers"
     elif prediction == 1:
-        st.markdown('<div class="result-box">Cluster 1 → 👑 Premium High Spending Customers</div>', unsafe_allow_html=True)
-
+        result_text = "Cluster 1 → 👑 Premium High Spending Customers"
     elif prediction == 2:
-        st.markdown('<div class="result-box">Cluster 2 → ⭐ Digital Active Customers</div>', unsafe_allow_html=True)
-
+        result_text = "Cluster 2 → ⭐ Digital Active Customers"
     else:
-        st.markdown('<div class="result-box">Cluster 3 → 👨‍👩‍👧 Family Oriented Moderate Customers</div>', unsafe_allow_html=True)
+        result_text = "Cluster 3 → 👨‍👩‍👧 Family Oriented Moderate Customers"
 
+    st.markdown(f'<div class="result-box">{result_text}</div>', unsafe_allow_html=True)
     st.success("Prediction Completed Successfully ✅")
 
 # -------------------- Footer --------------------
 st.markdown("---")
-
-
+st.caption("Developed by Aditi Khande | Data Science Project")
