@@ -3,29 +3,40 @@ import numpy as np
 import joblib
 
 # -------------------- Page Config --------------------
+st.set_page_config(
+    page_title="Customer Segmentation Dashboard",
+    page_icon="🛍",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# -------------------- Custom CSS --------------------
 st.markdown("""
 <style>
 
-/* ===== App Background ===== */
+/* Remove Streamlit top header + white rounded bar */
+header {visibility: hidden;}
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+div[data-testid="stToolbar"] {display: none;}
+div[data-testid="stDecoration"] {display: none;}
+
+/* App background */
 .stApp {
-    background-color: #f2f5f9;
+    background-color: #f4f8fc;
 }
 
-/* Remove top white bar completely */
-header[data-testid="stHeader"] {
-    display: none;
-}
-
+/* Remove extra top spacing */
 .block-container {
-    padding-top: 1rem !important;
+    padding-top: 0rem;
 }
 
 /* ===== Main Title ===== */
 .app-title {
-    font-size:70px;
-    font-weight:900;
+    font-size:60px;
+    font-weight:800;
     text-align:center;
-    color:#1E3A5F;   /* Same color as sidebar */
+    color:#2F80ED;
     margin-top:20px;
     margin-bottom:10px;
 }
@@ -33,70 +44,66 @@ header[data-testid="stHeader"] {
 /* ===== Subtitle ===== */
 .app-subtitle {
     text-align:center;
-    font-size:22px;
-    font-weight:500;
-    color:#1E3A5F;
-    margin-bottom:50px;
+    font-size:20px;
+    color:#5f6c7b;
+    margin-bottom:40px;
 }
 
-/* ===== Sidebar Styling ===== */
+/* ===== Sidebar Styling (Light Modern) ===== */
 section[data-testid="stSidebar"] {
-    background: #1E3A5F;  /* Professional deep blue */
-    width: 430px !important;
-    padding: 30px;
+    background-color: #EAF2FD;
+    width: 400px !important;
+    padding: 25px;
 }
 
 section[data-testid="stSidebar"] label {
-    color: white !important;
-    font-size:16px !important;
+    color: #2F80ED !important;
     font-weight:600;
 }
 
 section[data-testid="stSidebar"] .stNumberInput input {
-    background-color: #ffffff;
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
-/* Sidebar button */
+/* Sidebar Button */
 section[data-testid="stSidebar"] button {
-    background-color: #ffffff !important;
-    color: #1E3A5F !important;
-    font-weight: 600;
-    border-radius: 10px;
+    background-color: #2F80ED !important;
+    color: white !important;
+    font-weight:600;
+    border-radius: 12px;
 }
 
 /* ===== Cards ===== */
 .card {
     background: white;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0px 12px 30px rgba(0,0,0,0.08);
-    margin-bottom: 40px;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
 }
 
-/* Section Headings */
+/* Section Titles */
 h3 {
-    font-size:32px !important;
+    font-size:30px !important;
     font-weight:700 !important;
-    color:#1E3A5F !important;
+    color:#2F80ED !important;
 }
 
-/* Content text inside cards */
+/* Content Text */
 .card p, .card div {
-    font-size:20px !important;
-    line-height:1.8;
-    font-weight:500;
+    font-size:19px !important;
+    line-height:1.7;
 }
 
-/* ===== Result Box ===== */
+/* Result Box */
 .result-box {
-    padding: 40px;
-    border-radius: 20px;
-    background: #ffffff;
+    padding: 35px;
+    border-radius: 18px;
+    background-color: #ffffff;
     text-align:center;
-    font-size:30px;
+    font-size:26px;
     font-weight:700;
-    border: 3px solid #1E3A5F;
+    border: 2px solid #2F80ED;
     margin-top:20px;
 }
 
@@ -141,7 +148,7 @@ st.write(f"""
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# -------------------- Purchase Behaviour BELOW --------------------
+# -------------------- Purchase Behaviour --------------------
 st.markdown('<div class="card">', unsafe_allow_html=True)
 st.subheader("📈 Purchase Behaviour")
 
@@ -168,7 +175,7 @@ if predict_btn:
     st.subheader("🎯 Prediction Result")
 
     if prediction == 0:
-        result_text = "Cluster 0 → 💡  Low Income Browsing Customers"
+        result_text = "Cluster 0 → 💡 Low Income Browsing Customers"
     elif prediction == 1:
         result_text = "Cluster 1 → 👑 Affluent Premium Customers"
     elif prediction == 2:
@@ -181,5 +188,3 @@ if predict_btn:
 
 # -------------------- Footer --------------------
 st.markdown("---")
-
-
