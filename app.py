@@ -98,7 +98,6 @@ num_web_visits = st.sidebar.number_input("💻 Web Visits Per Month", min_value=
 predict_btn = st.sidebar.button("🚀 Predict Segment")
 
 # -------------------- Customer Profile --------------------
-st.markdown('<div class="custom-box">', unsafe_allow_html=True)
 st.markdown('<div class="section-title">📊 Customer Profile</div>', unsafe_allow_html=True)
 
 st.write(f"""
@@ -112,7 +111,6 @@ st.write(f"""
 st.markdown('</div>', unsafe_allow_html=True)
 
 # -------------------- Purchase Behaviour --------------------
-st.markdown('<div class="custom-box">', unsafe_allow_html=True)
 st.markdown('<div class="section-title">📈 Purchase Behaviour</div>', unsafe_allow_html=True)
 
 st.write(f"""
@@ -156,3 +154,4 @@ if predict_btn:
 
 # -------------------- Footer --------------------
 st.markdown("---")
+
