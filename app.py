@@ -15,10 +15,12 @@ st.markdown("""
 
 /* -------- Sidebar Width -------- */
 section[data-testid="stSidebar"] {
-    width: 450px !important;background-color:#e9f2ff;
+    width: 450px !important;
+    background-color:#e9f2ff;
 }
 section[data-testid="stSidebar"] > div {
     width: 450px !important;
+    background-color:#e9f2ff;
 }
 
 /* -------- Add More Top Space -------- */
@@ -39,7 +41,7 @@ section[data-testid="stSidebar"] > div {
 .sub-text {
     font-size:22px;
     text-align:center;
-    color:#6c757d;
+    color:#1F4E79;
     margin-bottom:50px;
 }
 
@@ -162,6 +164,7 @@ if predict_btn:
 
 # -------------------- Footer --------------------
 st.markdown("---")
+
 
 
 
