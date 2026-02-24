@@ -147,8 +147,6 @@ if predict_btn:
     scaled_data = scaler.transform(input_data)
     prediction = model.predict(scaled_data)[0]
 
-    st.markdown('<div class="section-title">🎯 Prediction Result</div>', unsafe_allow_html=True)
-
     if prediction == 0:
         result_text = "Cluster 0 → 💡 Budget / Low Value Customers"
     elif prediction == 1:
@@ -164,6 +162,7 @@ if predict_btn:
 
 # -------------------- Footer --------------------
 st.markdown("---")
+
 
 
 
