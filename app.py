@@ -2,115 +2,92 @@ import streamlit as st
 import numpy as np
 import joblib
 
-# ---------------- PAGE CONFIG ----------------
+# -------------------- Page Config --------------------
 st.set_page_config(
-    page_title="Customer Segmentation",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    page_title="Customer Segmentation Dashboard",
+    page_icon="🛍",
+    layout="wide"
 )
 
-# ---------------- REMOVE TOP BAR COMPLETELY ----------------
+# -------------------- Custom CSS --------------------
 st.markdown("""
 <style>
-
-/* Hide Streamlit header, toolbar, footer */
-header {visibility: hidden;}
-footer {visibility: hidden;}
-#MainMenu {visibility: hidden;}
-div[data-testid="stToolbar"] {display: none;}
-div[data-testid="stDecoration"] {display: none;}
-
-/* Remove top padding */
-.block-container {
-    padding-top: 0rem;
+.main-title {
+    font-size:42px;
+    font-weight:700;
+    text-align:center;
+    color:#2E86C1;
 }
 
-/* App background */
-.stApp {
-    background-color: #f5f5f5;
+.sub-text {
+    text-align:center;
+    font-size:18px;
+    color:gray;
 }
 
-/* Sidebar simple light */
-section[data-testid="stSidebar"] {
-    background-color: #ffffff;
-    border-right: 1px solid #e0e0e0;
-}
-
-/* Card style */
-.card {
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #e5e5e5;
-}
-
-/* Result box */
 .result-box {
-    padding: 25px;
-    border-radius: 10px;
-    background: white;
-    border: 1px solid #333;
-    font-size: 20px;
-    font-weight: 600;
-    text-align: center;
+    padding:25px;
+    border-radius:15px;
+    background-color:#f4f6f7;
+    text-align:center;
+    font-size:22px;
+    font-weight:600;
+    border:2px solid #2E86C1;
 }
-
 </style>
 """, unsafe_allow_html=True)
 
-# ---------------- LOAD MODEL ----------------
+# -------------------- Load Model --------------------
 scaler = joblib.load("scaler.pkl")
 model = joblib.load("customer_segmentation_model.pkl")
 
-# ---------------- TITLE ----------------
-st.title("Customer Segmentation Dashboard")
-st.write("Predict customer segment using spending behaviour.")
+# -------------------- Title --------------------
+st.markdown('<p class="main-title">Customer Segmentation Dashboard</p>', unsafe_allow_html=True)
+st.markdown('<p class="sub-text">Predict Customer Type Using Behaviour & Spending Pattern</p>', unsafe_allow_html=True)
 
-# ---------------- SIDEBAR ----------------
-st.sidebar.header("Enter Customer Details")
+st.write("")
 
-income = st.sidebar.number_input("Income", min_value=0.0)
-recency = st.sidebar.number_input("Recency (Days)", min_value=0)
-age = st.sidebar.number_input("Age", min_value=0)
-total_spending = st.sidebar.number_input("Total Spending", min_value=0.0)
-family_size = st.sidebar.number_input("Family Size", min_value=1)
+# -------------------- Sidebar Inputs --------------------
+st.sidebar.header("📋 Enter Customer Details")
 
-num_web_purchases = st.sidebar.number_input("Web Purchases", min_value=0)
-num_catalog_purchases = st.sidebar.number_input("Catalog Purchases", min_value=0)
-num_store_purchases = st.sidebar.number_input("Store Purchases", min_value=0)
-num_web_visits = st.sidebar.number_input("Web Visits Per Month", min_value=0)
+income = st.sidebar.number_input("💰 Income", min_value=0.0)
+recency = st.sidebar.number_input("⏳ Recency (Days Since Last Purchase)", min_value=0)
+age = st.sidebar.number_input("🎂 Age", min_value=0)
+total_spending = st.sidebar.number_input("🛒 Total Spending", min_value=0.0)
+family_size = st.sidebar.number_input("👨‍👩‍👧 Family Size", min_value=1)
 
-predict_btn = st.sidebar.button("Predict")
+num_web_purchases = st.sidebar.number_input("🌐 Web Purchases", min_value=0)
+num_catalog_purchases = st.sidebar.number_input("📦 Catalog Purchases", min_value=0)
+num_store_purchases = st.sidebar.number_input("🏬 Store Purchases", min_value=0)
+num_web_visits = st.sidebar.number_input("💻 Web Visits Per Month", min_value=0)
 
-# ---------------- PROFILE CARD ----------------
-st.markdown('<div class="card">', unsafe_allow_html=True)
-st.subheader("Customer Profile")
+predict_btn = st.sidebar.button("🚀 Predict Segment")
 
-st.write(f"""
-Income: {income}  
-Age: {age}  
-Total Spending: {total_spending}  
-Recency: {recency}  
-Family Size: {family_size}
-""")
+# -------------------- Layout --------------------
+col1, col2 = st.columns(2)
 
-st.markdown('</div>', unsafe_allow_html=True)
+with col1:
+    st.subheader("📊 Customer Profile")
 
-# ---------------- PURCHASE CARD ----------------
-st.markdown('<div class="card">', unsafe_allow_html=True)
-st.subheader("Purchase Behaviour")
+    st.info(f"""
+    Income : {income}  
+    Age : {age}  
+    Total Spending : {total_spending}  
+    Recency : {recency} days  
+    Family Size : {family_size}
+    """)
 
-st.write(f"""
-Web Purchases: {num_web_purchases}  
-Catalog Purchases: {num_catalog_purchases}  
-Store Purchases: {num_store_purchases}  
-Web Visits: {num_web_visits}
-""")
+with col2:
+    st.subheader("📈 Purchase Behaviour")
 
-st.markdown('</div>', unsafe_allow_html=True)
+    st.info(f"""
+    Web Purchases : {num_web_purchases}  
+    Catalog Purchases : {num_catalog_purchases}  
+    Store Purchases : {num_store_purchases}  
+    Web Visits Per Month : {num_web_visits}
+    """)
 
-# ---------------- PREDICTION ----------------
+# -------------------- Prediction --------------------
 if predict_btn:
 
     input_data = np.array([[income, recency, age, total_spending,
@@ -121,13 +98,23 @@ if predict_btn:
     scaled_data = scaler.transform(input_data)
     prediction = model.predict(scaled_data)[0]
 
-    if prediction == 0:
-        result_text = "Cluster 0 - Low Income Customers"
-    elif prediction == 1:
-        result_text = "Cluster 1 - Premium Customers"
-    elif prediction == 2:
-        result_text = "Cluster 2 - Active Customers"
-    else:
-        result_text = "Cluster 3 - Family Customers"
+    st.write("")
+    st.subheader("🎯 Prediction Result")
 
-    st.markdown(f'<div class="result-box">{result_text}</div>', unsafe_allow_html=True)
+    # -------- Cluster Mapping --------
+    if prediction == 0:
+        st.markdown('<div class="result-box">Cluster 0 → 💡 Budget / Low Value Customers</div>', unsafe_allow_html=True)
+
+    elif prediction == 1:
+        st.markdown('<div class="result-box">Cluster 1 → 👑 Premium High Spending Customers</div>', unsafe_allow_html=True)
+
+    elif prediction == 2:
+        st.markdown('<div class="result-box">Cluster 2 → ⭐ Digital Active Customers</div>', unsafe_allow_html=True)
+
+    else:
+        st.markdown('<div class="result-box">Cluster 3 → 👨‍👩‍👧 Family Oriented Moderate Customers</div>', unsafe_allow_html=True)
+
+    st.success("Prediction Completed Successfully ✅")
+
+# -------------------- Footer --------------------
+st.markdown("---")
