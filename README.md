@@ -59,5 +59,6 @@ Derived data-driven marketing strategies for each segment.
 
 ## 🌐 Deployment
 The trained clustering model is deployed using Streamlit Cloud, enabling users to input customer details and receive real-time segmentation results.
+The live Application Link:https://data-driven-customer-profiling-and-segmentation-framework-6za4.streamlit.app/
 
 ---
