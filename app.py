@@ -4,7 +4,7 @@ import joblib
 
 # -------------------- Page Config --------------------
 st.set_page_config(
-    page_title="Customer Segmentation App",
+    page_title="Customer Segmentation Dashboard",
     page_icon="🛍",
     layout="wide"
 )
@@ -13,44 +13,72 @@ st.set_page_config(
 st.markdown("""
 <style>
 
+/* App background */
+.stApp {
+    background-color: #f4f7fb;
+}
+
+/* Reduce top padding */
 .block-container {
-    max-width: 900px;
-    padding-top: 2rem;
+    padding-top: 1rem;
+    max-width: 950px;
 }
 
-.main-title {
-    font-size:52px;
-    font-weight:800;
+/* Main App Title */
+.app-title {
+    font-size:60px;
+    font-weight:900;
     text-align:center;
-    color:#1F4E79;
-    margin-bottom:10px;
+    color:#1B4F72;
+    margin-top:10px;
+    margin-bottom:5px;
 }
 
-.sub-text {
+/* Subtitle */
+.app-subtitle {
     text-align:center;
-    font-size:18px;
-    color:#6c757d;
+    font-size:20px;
+    color:#5D6D7E;
     margin-bottom:40px;
 }
 
-.card {
-    padding:25px;
-    border-radius:15px;
-    background-color:#f8f9fa;
-    margin-bottom:25px;
-    box-shadow:0px 4px 12px rgba(0,0,0,0.08);
+/* Sidebar Styling */
+section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #1B4F72, #2E86C1);
+    padding: 25px;
+    width: 380px !important;
 }
 
+section[data-testid="stSidebar"] .css-1d391kg {
+    color: white;
+}
+
+section[data-testid="stSidebar"] label {
+    color: white !important;
+    font-weight: 600;
+}
+
+/* Cards */
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+}
+
+/* Result Box */
 .result-box {
-    padding:30px;
-    border-radius:15px;
-    background-color:#eef5ff;
+    padding: 35px;
+    border-radius: 18px;
+    background-color: #EAF2F8;
     text-align:center;
-    font-size:24px;
-    font-weight:600;
-    border:2px solid #1F4E79;
+    font-size:26px;
+    font-weight:700;
+    border: 3px solid #1B4F72;
     margin-top:20px;
 }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -58,12 +86,12 @@ st.markdown("""
 scaler = joblib.load("scaler.pkl")
 model = joblib.load("customer_segmentation_model.pkl")
 
-# -------------------- Title Section --------------------
-st.markdown('<p class="main-title">Customer Segmentation App</p>', unsafe_allow_html=True)
-st.markdown('<p class="sub-text">AI-Powered Customer Profiling & Cluster Prediction</p>', unsafe_allow_html=True)
+# -------------------- Title --------------------
+st.markdown('<div class="app-title">Customer Segmentation Dashboard</div>', unsafe_allow_html=True)
+st.markdown('<div class="app-subtitle">AI-Powered Customer Profiling & Cluster Prediction</div>', unsafe_allow_html=True)
 
-# -------------------- Sidebar Inputs --------------------
-st.sidebar.header("📋 Enter Customer Details")
+# -------------------- Sidebar --------------------
+st.sidebar.markdown("## 📋 Enter Customer Details")
 
 income = st.sidebar.number_input("💰 Income", min_value=0.0)
 recency = st.sidebar.number_input("⏳ Recency (Days Since Last Purchase)", min_value=0)
@@ -78,7 +106,7 @@ num_web_visits = st.sidebar.number_input("💻 Web Visits Per Month", min_value=
 
 predict_btn = st.sidebar.button("🚀 Predict Segment")
 
-# -------------------- Customer Profile Card --------------------
+# -------------------- Customer Profile --------------------
 st.markdown('<div class="card">', unsafe_allow_html=True)
 st.subheader("📊 Customer Profile")
 
@@ -89,9 +117,10 @@ st.write(f"""
 **Recency:** {recency} days  
 **Family Size:** {family_size}
 """)
+
 st.markdown('</div>', unsafe_allow_html=True)
 
-# -------------------- Purchase Behaviour Card --------------------
+# -------------------- Purchase Behaviour BELOW --------------------
 st.markdown('<div class="card">', unsafe_allow_html=True)
 st.subheader("📈 Purchase Behaviour")
 
@@ -101,6 +130,7 @@ st.write(f"""
 **Store Purchases:** {num_store_purchases}  
 **Web Visits Per Month:** {num_web_visits}
 """)
+
 st.markdown('</div>', unsafe_allow_html=True)
 
 # -------------------- Prediction --------------------
@@ -117,11 +147,11 @@ if predict_btn:
     st.subheader("🎯 Prediction Result")
 
     if prediction == 0:
-        result_text = "Cluster 0 → 💡 Budget / Low Value Customers"
+        result_text = "Cluster 0 → 💡  Low Income Browsing Customers"
     elif prediction == 1:
-        result_text = "Cluster 1 → 👑 Premium High Spending Customers"
+        result_text = "Cluster 1 → 👑 Affluent Premium Customers"
     elif prediction == 2:
-        result_text = "Cluster 2 → ⭐ Digital Active Customers"
+        result_text = "Cluster 2 → ⭐ Active Customers"
     else:
         result_text = "Cluster 3 → 👨‍👩‍👧 Family Oriented Moderate Customers"
 
@@ -130,4 +160,3 @@ if predict_btn:
 
 # -------------------- Footer --------------------
 st.markdown("---")
-st.caption("Developed by Aditi Khande | Data Science Project")
