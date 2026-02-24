@@ -15,7 +15,7 @@ st.markdown("""
 
 /* -------- Sidebar Width -------- */
 section[data-testid="stSidebar"] {
-    width: 450px !important;
+    width: 450px !important;background-color:#e9f2ff;
 }
 section[data-testid="stSidebar"] > div {
     width: 450px !important;
@@ -162,5 +162,6 @@ if predict_btn:
 
 # -------------------- Footer --------------------
 st.markdown("---")
+
 
 
