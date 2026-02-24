@@ -21,19 +21,26 @@ section[data-testid="stSidebar"] > div {
     width: 450px !important;
 }
 
-/* -------- Main Title -------- */
+/* Remove extra top spacing */
+.block-container {
+    padding-top: 1rem;
+}
+
+/* -------- Centered Main Title -------- */
 .main-title {
-    font-size:52px;
+    font-size:55px;
     font-weight:800;
-    margin-top:10px;
+    text-align:center;
     margin-bottom:5px;
     color:#1F4E79;
 }
 
+/* -------- Subtitle -------- */
 .sub-text {
     font-size:20px;
+    text-align:center;
     color:#6c757d;
-    margin-bottom:30px;
+    margin-bottom:40px;
 }
 
 /* -------- Section Box -------- */
@@ -74,8 +81,6 @@ model = joblib.load("customer_segmentation_model.pkl")
 st.markdown('<div class="main-title">🛍 Customer Segmentation Dashboard</div>', unsafe_allow_html=True)
 st.markdown('<div class="sub-text">Predict Customer Type Using Behaviour & Spending Pattern</div>', unsafe_allow_html=True)
 
-st.write("")
-
 # -------------------- Sidebar Inputs --------------------
 st.sidebar.header("📋 Enter Customer Details")
 
@@ -92,7 +97,7 @@ num_web_visits = st.sidebar.number_input("💻 Web Visits Per Month", min_value=
 
 predict_btn = st.sidebar.button("🚀 Predict Segment")
 
-# -------------------- Customer Profile Section --------------------
+# -------------------- Customer Profile --------------------
 st.markdown('<div class="custom-box">', unsafe_allow_html=True)
 st.markdown('<div class="section-title">📊 Customer Profile</div>', unsafe_allow_html=True)
 
@@ -106,7 +111,7 @@ st.write(f"""
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# -------------------- Purchase Behaviour Section --------------------
+# -------------------- Purchase Behaviour --------------------
 st.markdown('<div class="custom-box">', unsafe_allow_html=True)
 st.markdown('<div class="section-title">📈 Purchase Behaviour</div>', unsafe_allow_html=True)
 
