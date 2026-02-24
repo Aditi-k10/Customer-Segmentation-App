@@ -3,33 +3,37 @@ import numpy as np
 import joblib
 
 # -------------------- Page Config --------------------
-st.set_page_config(
-    page_title="Customer Segmentation Dashboard",
-    page_icon="🛍",
-    layout="wide"
-)
-
-# -------------------- Custom CSS --------------------
 st.markdown("""
 <style>
 
 /* App background */
 .stApp {
-    background-color: #f4f7fb;
+    background: linear-gradient(135deg, #eef2f7, #d9e4f5);
 }
 
-/* Reduce top padding */
+/* Remove extra top white spacing */
 .block-container {
-    padding-top: 1rem;
-    max-width: 950px;
+    padding-top: 0rem !important;
+    margin-top: 0rem !important;
 }
 
-/* Main App Title */
+/* Remove empty white bar */
+header[data-testid="stHeader"] {
+    background: transparent;
+}
+
+div[data-testid="stToolbar"] {
+    visibility: hidden;
+    height: 0%;
+    position: fixed;
+}
+
+/* Main Title */
 .app-title {
-    font-size:60px;
+    font-size:65px;
     font-weight:900;
     text-align:center;
-    color:#1B4F72;
+    color:#0B3C5D;
     margin-top:10px;
     margin-bottom:5px;
 }
@@ -38,44 +42,45 @@ st.markdown("""
 .app-subtitle {
     text-align:center;
     font-size:20px;
-    color:#5D6D7E;
+    color:#34495E;
     margin-bottom:40px;
 }
 
-/* Sidebar Styling */
+/* Sidebar styling */
 section[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #1B4F72, #2E86C1);
-    padding: 25px;
-    width: 380px !important;
+    background: linear-gradient(180deg, #0B3C5D, #1D6FA3);
+    width: 420px !important;   /* Increased width */
+    padding: 30px;
 }
 
-section[data-testid="stSidebar"] .css-1d391kg {
-    color: white;
-}
-
+/* Sidebar text color */
 section[data-testid="stSidebar"] label {
     color: white !important;
     font-weight: 600;
 }
 
-/* Cards */
+section[data-testid="stSidebar"] .stNumberInput input {
+    background-color: #f0f4f8;
+}
+
+/* Card style */
 .card {
     background: white;
     padding: 30px;
-    border-radius: 18px;
-    box-shadow: 0px 8px 20px rgba(0,0,0,0.08);
+    border-radius: 20px;
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.08);
     margin-bottom: 30px;
 }
 
-/* Result Box */
+/* Result box */
 .result-box {
     padding: 35px;
-    border-radius: 18px;
-    background-color: #EAF2F8;
+    border-radius: 20px;
+    background: #ffffff;
     text-align:center;
     font-size:26px;
     font-weight:700;
-    border: 3px solid #1B4F72;
+    border: 3px solid #0B3C5D;
     margin-top:20px;
 }
 
@@ -88,7 +93,7 @@ model = joblib.load("customer_segmentation_model.pkl")
 
 # -------------------- Title --------------------
 st.markdown('<div class="app-title">Customer Segmentation Dashboard</div>', unsafe_allow_html=True)
-st.markdown('<div class="app-subtitle">AI-Powered Customer Profiling & Cluster Prediction</div>', unsafe_allow_html=True)
+st.markdown('<div class="app-subtitle">Predict Customer Type Using Behaviour & Spending Pattern</div>', unsafe_allow_html=True)
 
 # -------------------- Sidebar --------------------
 st.sidebar.markdown("## 📋 Enter Customer Details")
@@ -160,3 +165,4 @@ if predict_btn:
 
 # -------------------- Footer --------------------
 st.markdown("---")
+
