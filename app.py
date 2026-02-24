@@ -88,7 +88,7 @@ scaler = joblib.load("scaler.pkl")
 model = joblib.load("customer_segmentation_model.pkl")
 
 # -------------------- Title --------------------
-st.markdown('<div class="main-title">🛍 Customer Segmentation Dashboard</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-title"> Customer Segmentation Dashboard</div>', unsafe_allow_html=True)
 st.markdown('<div class="sub-text">Predict Customer Type Using Behaviour & Spending Pattern</div>', unsafe_allow_html=True)
 
 # -------------------- Sidebar Inputs --------------------
@@ -164,6 +164,7 @@ if predict_btn:
 
 # -------------------- Footer --------------------
 st.markdown("---")
+
 
 
 
