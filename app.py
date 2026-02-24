@@ -13,7 +13,7 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-/* -------- Sidebar Width -------- */
+/* Increase Sidebar Width */
 section[data-testid="stSidebar"] {
     width: 450px !important;
 }
@@ -21,46 +21,40 @@ section[data-testid="stSidebar"] > div {
     width: 450px !important;
 }
 
-/* -------- Main Title -------- */
+/* Main Title */
 .main-title {
-    font-size:52px;
+    font-size:55px;
     font-weight:800;
+    color:#1B4F72;
     margin-top:10px;
-    margin-bottom:5px;
-    color:#1F4E79;
+    margin-bottom:0px;
 }
 
+/* Subtitle */
 .sub-text {
     font-size:20px;
-    color:#6c757d;
+    color:#5D6D7E;
     margin-bottom:30px;
 }
 
-/* -------- Section Box -------- */
-.custom-box {
-    background-color:#f8f9fa;
+/* Section Boxes */
+.section-box {
     padding:25px;
-    border-radius:15px;
-    margin-bottom:25px;
+    border-radius:18px;
+    background-color:#F4F6F7;
     box-shadow:0px 4px 12px rgba(0,0,0,0.05);
+    margin-bottom:25px;
 }
 
-/* -------- Prediction Box -------- */
+/* Prediction Box */
 .result-box {
     padding:30px;
-    border-radius:15px;
-    background-color:#e9f2ff;
+    border-radius:18px;
+    background-color:#EBF5FB;
     text-align:center;
     font-size:24px;
-    font-weight:600;
-    border:2px solid #2E86C1;
-}
-
-.section-title {
-    font-size:26px;
     font-weight:700;
-    margin-bottom:15px;
-    color:#2E86C1;
+    border:2px solid #2E86C1;
 }
 
 </style>
@@ -92,32 +86,31 @@ num_web_visits = st.sidebar.number_input("💻 Web Visits Per Month", min_value=
 
 predict_btn = st.sidebar.button("🚀 Predict Segment")
 
-# -------------------- Customer Profile Section --------------------
-st.markdown('<div class="custom-box">', unsafe_allow_html=True)
-st.markdown('<div class="section-title">📊 Customer Profile</div>', unsafe_allow_html=True)
+# -------------------- Layout --------------------
+col1, col2 = st.columns(2)
 
-st.write(f"""
-**Income:** {income}  
-**Age:** {age}  
-**Total Spending:** {total_spending}  
-**Recency:** {recency} days  
-**Family Size:** {family_size}
-""")
+with col1:
+    st.markdown('<div class="section-box">', unsafe_allow_html=True)
+    st.subheader("📊 Customer Profile")
+    st.write(f"""
+    **Income:** {income}  
+    **Age:** {age}  
+    **Total Spending:** {total_spending}  
+    **Recency:** {recency} days  
+    **Family Size:** {family_size}
+    """)
+    st.markdown('</div>', unsafe_allow_html=True)
 
-st.markdown('</div>', unsafe_allow_html=True)
-
-# -------------------- Purchase Behaviour Section --------------------
-st.markdown('<div class="custom-box">', unsafe_allow_html=True)
-st.markdown('<div class="section-title">📈 Purchase Behaviour</div>', unsafe_allow_html=True)
-
-st.write(f"""
-**Web Purchases:** {num_web_purchases}  
-**Catalog Purchases:** {num_catalog_purchases}  
-**Store Purchases:** {num_store_purchases}  
-**Web Visits Per Month:** {num_web_visits}
-""")
-
-st.markdown('</div>', unsafe_allow_html=True)
+with col2:
+    st.markdown('<div class="section-box">', unsafe_allow_html=True)
+    st.subheader("📈 Purchase Behaviour")
+    st.write(f"""
+    **Web Purchases:** {num_web_purchases}  
+    **Catalog Purchases:** {num_catalog_purchases}  
+    **Store Purchases:** {num_store_purchases}  
+    **Web Visits Per Month:** {num_web_visits}
+    """)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # -------------------- Prediction --------------------
 if predict_btn:
@@ -130,8 +123,8 @@ if predict_btn:
     scaled_data = scaler.transform(input_data)
     prediction = model.predict(scaled_data)[0]
 
-    st.markdown('<div class="custom-box">', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">🎯 Prediction Result</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-box">', unsafe_allow_html=True)
+    st.subheader("🎯 Prediction Result")
 
     if prediction == 0:
         st.markdown('<div class="result-box">Cluster 0 → 💡 Budget / Low Value Customers</div>', unsafe_allow_html=True)
@@ -146,7 +139,6 @@ if predict_btn:
         st.markdown('<div class="result-box">Cluster 3 → 👨‍👩‍👧 Family Oriented Moderate Customers</div>', unsafe_allow_html=True)
 
     st.success("Prediction Completed Successfully ✅")
-
     st.markdown('</div>', unsafe_allow_html=True)
 
 # -------------------- Footer --------------------
