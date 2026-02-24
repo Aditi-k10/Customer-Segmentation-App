@@ -145,7 +145,6 @@ if predict_btn:
     scaled_data = scaler.transform(input_data)
     prediction = model.predict(scaled_data)[0]
 
-    st.markdown('<div class="custom-box">', unsafe_allow_html=True)
     st.markdown('<div class="section-title">🎯 Prediction Result</div>', unsafe_allow_html=True)
 
     if prediction == 0:
@@ -159,10 +158,9 @@ if predict_btn:
 
     st.markdown(f'<div class="result-box">{result_text}</div>', unsafe_allow_html=True)
 
-    st.success("Prediction Completed Successfully ✅")
-
     st.markdown('</div>', unsafe_allow_html=True)
 
 # -------------------- Footer --------------------
 st.markdown("---")
+
 
