@@ -21,53 +21,61 @@ section[data-testid="stSidebar"] > div {
     width: 450px !important;
 }
 
-/* Remove extra top spacing */
+/* -------- Add More Top Space -------- */
 .block-container {
-    padding-top: 1rem;
+    padding-top: 3rem;
 }
 
 /* -------- Centered Main Title -------- */
 .main-title {
-    font-size:55px;
+    font-size:60px;
     font-weight:800;
     text-align:center;
-    margin-bottom:5px;
+    margin-bottom:10px;
     color:#1F4E79;
 }
 
 /* -------- Subtitle -------- */
 .sub-text {
-    font-size:20px;
+    font-size:22px;
     text-align:center;
     color:#6c757d;
-    margin-bottom:40px;
+    margin-bottom:50px;
 }
 
 /* -------- Section Box -------- */
 .custom-box {
     background-color:#f8f9fa;
-    padding:25px;
-    border-radius:15px;
-    margin-bottom:25px;
-    box-shadow:0px 4px 12px rgba(0,0,0,0.05);
+    padding:35px;
+    border-radius:18px;
+    margin-bottom:35px;
+    box-shadow:0px 6px 18px rgba(0,0,0,0.06);
+}
+
+/* -------- Section Titles -------- */
+.section-title {
+    font-size:32px;
+    font-weight:800;
+    margin-bottom:20px;
+    color:#2E86C1;
+}
+
+/* -------- Details Text -------- */
+.details-text {
+    font-size:20px;
+    line-height:1.8;
+    font-weight:500;
 }
 
 /* -------- Prediction Box -------- */
 .result-box {
-    padding:30px;
-    border-radius:15px;
+    padding:35px;
+    border-radius:18px;
     background-color:#e9f2ff;
     text-align:center;
-    font-size:24px;
-    font-weight:600;
-    border:2px solid #2E86C1;
-}
-
-.section-title {
-    font-size:26px;
+    font-size:28px;
     font-weight:700;
-    margin-bottom:15px;
-    color:#2E86C1;
+    border:2px solid #2E86C1;
 }
 
 </style>
@@ -98,27 +106,33 @@ num_web_visits = st.sidebar.number_input("💻 Web Visits Per Month", min_value=
 predict_btn = st.sidebar.button("🚀 Predict Segment")
 
 # -------------------- Customer Profile --------------------
+st.markdown('<div class="custom-box">', unsafe_allow_html=True)
 st.markdown('<div class="section-title">📊 Customer Profile</div>', unsafe_allow_html=True)
 
-st.write(f"""
-**Income:** {income}  
-**Age:** {age}  
-**Total Spending:** {total_spending}  
-**Recency:** {recency} days  
-**Family Size:** {family_size}
-""")
+st.markdown(f"""
+<div class="details-text">
+<b>Income:</b> {income}<br>
+<b>Age:</b> {age}<br>
+<b>Total Spending:</b> {total_spending}<br>
+<b>Recency:</b> {recency} days<br>
+<b>Family Size:</b> {family_size}
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
 # -------------------- Purchase Behaviour --------------------
+st.markdown('<div class="custom-box">', unsafe_allow_html=True)
 st.markdown('<div class="section-title">📈 Purchase Behaviour</div>', unsafe_allow_html=True)
 
-st.write(f"""
-**Web Purchases:** {num_web_purchases}  
-**Catalog Purchases:** {num_catalog_purchases}  
-**Store Purchases:** {num_store_purchases}  
-**Web Visits Per Month:** {num_web_visits}
-""")
+st.markdown(f"""
+<div class="details-text">
+<b>Web Purchases:</b> {num_web_purchases}<br>
+<b>Catalog Purchases:</b> {num_catalog_purchases}<br>
+<b>Store Purchases:</b> {num_store_purchases}<br>
+<b>Web Visits Per Month:</b> {num_web_visits}
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -137,16 +151,15 @@ if predict_btn:
     st.markdown('<div class="section-title">🎯 Prediction Result</div>', unsafe_allow_html=True)
 
     if prediction == 0:
-        st.markdown('<div class="result-box">Cluster 0 → 💡 Budget / Low Value Customers</div>', unsafe_allow_html=True)
-
+        result_text = "Cluster 0 → 💡 Budget / Low Value Customers"
     elif prediction == 1:
-        st.markdown('<div class="result-box">Cluster 1 → 👑 Premium High Spending Customers</div>', unsafe_allow_html=True)
-
+        result_text = "Cluster 1 → 👑 Premium High Spending Customers"
     elif prediction == 2:
-        st.markdown('<div class="result-box">Cluster 2 → ⭐ Digital Active Customers</div>', unsafe_allow_html=True)
-
+        result_text = "Cluster 2 → ⭐ Digital Active Customers"
     else:
-        st.markdown('<div class="result-box">Cluster 3 → 👨‍👩‍👧 Family Oriented Moderate Customers</div>', unsafe_allow_html=True)
+        result_text = "Cluster 3 → 👨‍👩‍👧 Family Oriented Moderate Customers"
+
+    st.markdown(f'<div class="result-box">{result_text}</div>', unsafe_allow_html=True)
 
     st.success("Prediction Completed Successfully ✅")
 
@@ -154,4 +167,3 @@ if predict_btn:
 
 # -------------------- Footer --------------------
 st.markdown("---")
-
